@@ -6,3 +6,5 @@ secrets/
 .secrets/
 node_modules/
 .claude/
+*.prev.*
+*.prev
