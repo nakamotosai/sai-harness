@@ -1,242 +1,250 @@
+<div align="center">
+
+**🌐 Made by [Sai](https://saaaai.com) · [saaaai.com](https://saaaai.com)** — AI workflow · one homepage
+
+**[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)**
+
+</div>
+
 # sai-harness
 
-> Claude / agent 交付系统公开笔记：汇报骨架 · checklist 永远最后
+> Public notes on a Claude / agent delivery system: reporting spine · checklist always last
 
-![sai-harness：Claude / agent 交付系统公开笔记](assets/readme/hero.svg)
+![sai-harness: public notes on a Claude / agent delivery system](assets/readme/hero.svg)
 
-## 一句话价值
+## One-line value
 
-官方 Claude Code 是可编程 agent 壳。我在上面养了一套个人交付系统：多步任务强制走搜、规格、执行、证据核验和行为进化；五个常驻分身拆开决策、质检、外搜、识图和远端；知识分四库，长文只有一个现行版；复杂活默认分头干再汇总，而不是一复杂就开会；对人汇报用固定五表，表外不塞散文。没有魔改客户端。全是 `CLAUDE.md`、skills、agents、hooks、MCP。
+Official Claude Code is a programmable agent shell. On top of it I've built a personal delivery system: multi-step tasks are forced through search → spec → execute → evidence verification → behavioral evolution; five standing subagents split decision, QA, search, vision, and remote; knowledge lives in four libraries with only one current long-form version; complex work defaults to split-then-merge instead of calling a meeting whenever it gets hard; reports to humans use a fixed five-block spine, no prose outside the table. No client modding. It's all `CLAUDE.md`, skills, agents, hooks, MCP.
 
-这个仓以这份说明和能力导图为主。私人配置、密钥、内网地址不会出现在这里。
+This repo is mainly that write-up and a capability map. Private config, keys, and intranet addresses never appear here.
 
-## 能力全景
+## Capability panorama
 
-![My Claude Harness 能力全景](docs/harness-map.png)
+![My Claude Harness capability panorama](docs/harness-map.png)
 
-导图是总览示意，细节以本文为准。
+The map is an overview sketch; details are authoritative in this text.
 
-## 为什么不一样
+## Why it's different
 
-官方空装已经能写代码、跑 git、接 MCP、写 hooks、开 subagent。  
-我没发明第二种 Claude Code。差距在纪律、分工、记忆怎么分、复杂任务怎么拆开再收拢，以及「我觉得好了」算不算完成。
+A stock install already writes code, runs git, speaks MCP, writes hooks, opens subagents.
+I didn't invent a second Claude Code. The gap is discipline, division of labor, how memory is partitioned, how complex tasks are split and re-collected, and whether "I think it's fine" counts as done.
 
-### 原则
+### Principles
 
-1. **地图短，流程深。** 总规则只做路由；厚流程进 skill。
-2. **完成看证据。** 磁盘状态、命令结果、核验回执说了算。
-3. **分身专精。** 选型的不做质检，质检的不定方案。
-4. **记忆分家。** 短坑、项目、视觉、长文，不混放。
-5. **错误要死透。** 改字不够，要有再犯时会失败的检查。
-6. **先找现成再手搓。** 能搜到的轮子，默认不从零发明。
-7. **对人像同事。** 先讲结果和你能感到的变化；自验是你点、刷、听、看，不是甩一串脚本让你跑。
-8. **默认分头，不默认开会。** 独立取证/实现分头干、结果回主控；真要互聊或同质大批量才升档。
-9. **方案整包。** 要达成效果就给完整方案；说做就整包做，不点菜式拆半包。
+1. **Short map, deep flow.** Top rules only route; heavy process goes into skills.
+2. **Completion is evidenced.** Disk state, command results, verification receipts decide.
+3. **Subagents specialize.** The one choosing doesn't QA; the one QA-ing doesn't decide the plan.
+4. **Memory is partitioned.** Short pitfalls, projects, visuals, and long-form are not mixed.
+5. **Errors must die thoroughly.** Changing words isn't enough; there must be a check that fails if it recurs.
+6. **Find existing first, hand-roll second.** If a wheel is searchable, don't reinvent it by default.
+7. **Talk like a colleague.** Lead with results and the change you'd feel; self-verification is you clicking, refreshing, listening, watching — not a wall of scripts dumped on you.
+8. **Default to splitting, not meeting.** Independent probe/build goes parallel and returns to the main thread; only genuine debate or large homogeneous batches escalate.
+9. **Plans are whole packages.** To hit an effect, give the complete plan; saying "do it" means the whole package, not à-la-carte half-pieces.
 
-### 速查：默认 vs 我
+### Quick reference: default vs mine
 
-| | 默认 Claude Code | 我这套 |
+| | Default Claude Code | This setup |
 |--|------------------|--------|
-| 定位 | 很强的编程会话助手 | 个人交付系统 |
-| 记忆 | 当次对话 + 自动笔记 | 四库 + 偏好铁律 + 长文版本 |
-| 多步任务 | 你催它才严 | 搜 → 规格 → 执行 → 核验 → 写回 |
-| 复杂并行 | 容易一人包办或乱开会 | 默认分头回主控；汇总落盘；可复盘流水 |
-| 完成 | 容易自报「好了」 | 质检对照磁盘，自吹无效 |
-| 调研 | 随手搜 | 浅/深两档，深研有最低要求 |
-| 出错后 | 多半修当次 | 修产物，也改规矩和传感器 |
-| 对人说话 | 结构常飘 | 固定五表；表外禁散文；方案不点菜 |
-| 内容体量 | 空装接近干净壳 | 几十个业务 skill、五个常驻分身、硬闸 |
+| Positioning | A strong coding chat assistant | A personal delivery system |
+| Memory | This conversation + auto notes | Four libraries + preference rules + long-form versions |
+| Multi-step tasks | Strict only when you nag | Search → spec → execute → verify → write-back |
+| Complex parallelism | Tends to one-person-everything or chaotic meetings | Defaults to split-and-return-to-main; merge lands on disk; replayable pipeline |
+| Completion | Easily self-reports "done" | QA checks disk; bragging is void |
+| Research | Casual search | Shallow/deep tiers, deep research has minimums |
+| After errors | Mostly fixes the instance | Fixes the artifact and the rules and the sensor |
+| Speaking to humans | Structure drifts | Fixed five blocks; no prose outside tables; no à la carte plans |
+| Content volume | Stock is near a clean shell | Dozens of domain skills, five standing subagents, hard gates |
 
-| # | 多出来的能力 | 默认体感 |
+| # | Extra capability | Default feel |
 |---|--------------|----------|
-| 1 | 四库分工 + 长文只认现行版 | 记忆糊在对话里 |
-| 2 | 多步任务强制产线 | 可以跳步交差 |
-| 3 | 专职质检 | 检查可选 |
-| 4 | 方案三关，一票否决 | 无固定裁判 |
-| 5 | 外搜有浅/深合同 | 搜两下就算调研 |
-| 6 | 翻车双修 + 再犯失败传感器 | 道歉补洞就完 |
-| 7 | 危险操作硬拦 | 多靠自觉 |
-| 8 | 远端日志 / 截图负载隔离 | 上下文容易被灌满 |
-| 9 | UI、demo、媒体有固定入口和验收 | 无完整视觉合同 |
-| 10 | 远程触角 + 长项目断点 | 会话一关就断 |
-| 11 | 改 harness 前后跑评测 | 改规则靠感觉 |
-| 12 | 汇报脊骨五表 + 整包方案纪律 | 文风和结构飘、菜单式拍板 |
-| 13 | 编排合同：阶段依赖、汇总闸、流水、禁无谓升图 | 复杂了就硬上互聊/流水线 |
+| 1 | Four-library division + long-form keeps only current version | Memory mushes in chat |
+| 2 | Multi-step tasks forced through a pipeline | Can skip steps and deliver |
+| 3 | Dedicated QA | Checking is optional |
+| 4 | Three-gate plan review, one-vote veto | No fixed judge |
+| 5 | External search has shallow/deep contracts | Two searches counts as research |
+| 6 | Crash double-fix + recurrence-failing sensor | Apologize-patch-move-on |
+| 7 | Dangerous ops hard-blocked | Mostly relies on willpower |
+| 8 | Remote log / screenshot load isolated | Context easily flooded |
+| 9 | UI, demos, media have fixed entries and acceptance | No full visual contract |
+| 10 | Remote feelers + long-project checkpoints | Session closes, thread dies |
+| 11 | Run evals before/after harness changes | Rules changed by feel |
+| 12 | Reporting spine of five blocks + whole-package plan discipline | Style and structure drift, menu-style sign-off |
+| 13 | Orchestration contract: stage dependencies, merge gate, pipeline, no needless graph escalation | Complex means force humans-talking / pipelines |
 
-## 核心方法论
+## Core methodology
 
-### 架构
+### Architecture
 
 ```
-你
- └─ 主控会话（读地图、派活、收口、写回）
-     ├─ 规则：短地图 + 偏好清单 + 记忆索引
-     ├─ 节奏：多步任务强制产线
-     ├─ 编排：默认分头回主控；真互聊 / 同质大批量才升档
-     ├─ 分身：方案 / 质检 / 外搜 / 识图 / 远端
-     ├─ 领域技能：前端、媒体、远程、知识、进化……
-     ├─ 硬闸：危险动作拦截、压缩后纪律重注、可选通知
-     ├─ 外接：知识库检索、联网搜、文档、消息桥
-     └─ 四库：错题 / 项目台账 / 主题与 demo / 长文维基
+You
+ └─ Main control session (reads the map, dispatches, closes out, writes back)
+     ├─ Rules: short map + preference list + memory index
+     ├─ Rhythm: multi-step tasks follow the pipeline
+     ├─ Orchestration: default split-and-return; only genuine debate / homogeneous batches escalate
+     ├─ Subagents: plan / QA / search / vision / remote
+     ├─ Domain skills: frontend, media, remote, knowledge, evolution…
+     ├─ Hard gates: dangerous-action interception, discipline re-injected after compression, optional notifications
+     ├─ External: knowledge-base search, web search, docs, message bridge
+     └─ Four libraries: pitfalls / project ledger / themes+demos / long-form wiki
 ```
 
-### 交付产线：五步
+### Delivery pipeline: five steps
 
-超过一步的活，默认整条走完：
+A job over one step defaults to running the whole line:
 
-1. 搜齐上下文（先错题，再长文/外网）
-2. 写清目标和验收（怎么算做完，明确不做什么）
-3. 高危才问人（删核心、钱账号、改总规则）
-4. 执行（该分头就分头，结果回主控）
-5. 核验到过（证据不够就重来）
-6. 写回记忆，按**脊骨五表**汇报
+1. Search the context (pitfalls first, then long-form / web)
+2. Write the goal and acceptance (what counts as done, and explicitly what's out of scope)
+3. Only ask a human for high-risk actions (deleting core, money/accounts, changing top rules)
+4. Execute (split where it should split, results return to main control)
+5. Verify to passing (insufficient evidence → redo)
+6. Write back to memory; report with the **five-block spine**
 
-翻了车要**双修**：这一次的产物要改，根因（规矩或检查）也要改。只改文件再喊过了，不算完工。
+A crash requires a **double fix**: fix this artifact, and fix the root cause (a rule or a check). Patching the file and calling it done doesn't count.
 
-### 接线：五个常驻分身
+### Wiring: five standing subagents
 
-| 角色 | 多出来的能力 |
+| Role | Extra capability |
 |------|----------------|
-| **方案裁判** | 逻辑、安全、可行性三关；任一否决就不能硬上 |
-| **完工质检** | 对照「声称改了什么」去盘上查；自吹通过无效 |
-| **外搜取证** | 专搜、专压证据；不定生死，不抢写终稿 |
-| **截图识图** | UI 验收只回文字，主会话不被大图撑爆 |
-| **远端探针** | SSH/大日志压成短证据再回来 |
+| **Plan judge** | Three gates — logic, safety, feasibility; one veto blocks it |
+| **Completion QA** | Audits disk against "claimed to change X"; self-attested pass is void |
+| **Search / evidence** | Dedicated search and evidence capture; doesn't call life-or-death, doesn't ghostwrite the final draft |
+| **Screenshot / vision** | UI acceptance returns only text, main session isn't flooded by big images |
+| **Remote probe** | SSH / large logs compressed into short evidence before returning |
 
-该谁干谁干。主控不一人串演全场。
+Whoever should do it, does it. Main control doesn't play every role solo.
 
-### 编排（Graph 思路，不换壳）
+### Orchestration (Graph thinking, no shell swap)
 
-网上讲 agent graph，核心往往是：别一人包办、该拆就拆、拆完再汇总、断了能看见卡在哪。  
-我没有换成外面另一套图引擎。还是 Claude Code 的 skill / subagent / 可选 team·workflow，上面焊了纪律：
+Talk online about agent graphs usually boils down to: don't do it all yourself, split when you should, merge after splitting, and see where it's stuck when it breaks.
+I didn't swap in some external graph engine. Still Claude Code's skill / subagent / optional team·workflow, with discipline welded on top:
 
-| 规则 | 含义 |
+| Rule | Meaning |
 |------|------|
-| **默认分头回主控** | 独立取证、实现用分身；结果交回主会话汇总 |
-| **真互聊才开会** | 多角色要互相辩才升小队；简单活禁止硬开会 |
-| **同质大批量才流水线** | 大批相同步骤才走批量编排；并强制有汇总产物 |
-| **阶段写清依赖** | 复杂计划写清靠谁、读什么、写出什么，中途能看出卡点 |
-| **多路必有汇总** | 好几路并行干完，必须有汇总文件，不能只在脑子里拼 |
-| **收工留短流水** | 谁上场了、打回几次，一行行可复盘 |
-| **长项目才断点** | 跨天长活才多断点文件；日常短活不用 |
-| **不该升就不升** | 简单题、开放研究乱套硬拓扑：传感器会挡 |
+| **Default split-and-return to main** | Independent probe/build uses subagents; results hand back to the main session to merge |
+| **Only genuine debate calls a meeting** | Multi-role adversarial reasoning escalates to a squad; simple jobs are forbidden from forcing a meeting |
+| **Only large homogeneous batches go pipeline** | Many identical steps use batch orchestration; and must produce a merged artifact |
+| **Stages write their dependencies** | Complex plans write who depends on whom, reads what, outputs what, so blockages are visible mid-flight |
+| **Multi-path must have a merge** | Several parallel paths finishing must produce a merge file, not just assembled in someone's head |
+| **Leave a short replay log** | Who took the stage, how many rejections — line by line, replayable |
+| **Only long projects keep checkpoints** | Cross-day long work uses checkpoint files; everyday short work doesn't |
+| **Don't escalate when you shouldn't** | Forcing hard topology on simple questions or open research: the sensor blocks it |
 
-对你的体感：复杂任务更稳，但不会为了「看起来很前沿」把每次对话都变成作战室。
+Your felt experience: complex tasks are steadier, but it won't turn every conversation into a war room just to "look cutting-edge."
 
-### 记忆：四库
+### Memory: four libraries
 
-默认助手的记忆容易糊成一锅。我拆成四套，各管一摊：
+A default assistant's memory tends to mush into one pot. I split it into four, each tending its own:
 
-| 库 | 干什么 | 实际用处 |
+| Library | Does what | Practical use |
 |----|--------|----------|
-| **错题本** | 短经验、复发指纹、踩坑 | 同类活先查旧账 |
-| **项目本** | 跨项目台账、优先级 | 开场知道全局该干啥 |
-| **主题库** | UI 规范、可复用 demo | 前端不从零猜风格；试验能升级入库 |
-| **维基知识库** | 长文真相源；同题只留一个现行版 | 调研/手册有 live，旧版进历史，垃圾进回收 |
+| **Pitfall book** | Short lessons, recurrence fingerprints, gotchas | Check old accounts first for similar work |
+| **Project ledger** | Cross-project accounts, priorities | At kickoff you know the global state of what to do |
+| **Theme library** | UI specs, reusable demos | Frontend doesn't guess style from scratch; experiments can graduate into the library |
+| **Wiki knowledge base** | Long-form source of truth; only one current version per topic | Research/manuals have a live copy, old versions go to history, trash goes to recycling |
 
-偏好另有一份清单：怎么汇报、怎么决策、什么绝对不干。代理自己写回，不会问「要不要我记一下」。
+Preferences have a separate list: how to report, how to decide, what is absolutely never done. Agents write back themselves; they don't ask "should I remember this?"
 
-### 汇报骨架（对人说话）
+### Reporting spine (speaking to humans)
 
-每条消息当工作指令。对话默认像真人同事。  
-你说「比如 A、B」会先扩同类。你要深研时给机制和可抄步骤。
+Each message is a work order. Conversations default to a real colleague.
+When you say "like A, B," it first expands the category. When you want deep research, it gives mechanisms and copyable steps.
 
-有交付/收工时，**只出表，表外不塞总起句或文末复读**。固定五块，顺序如下：
+When delivering or closing out, **only tables; no summary sentence or end-repetition outside the table**. Five fixed blocks, in this order:
 
-| 块 | 写什么 |
+| Block | What to write |
 |----|--------|
-| **1 一句话结果** | 好了 / 结论是 / 卡在哪 |
-| **2 人话说明** | 发生了什么、怎么处理、明确没做什么 |
-| **3 效果与自验** | 你能感到什么 + 你怎么自己确认（合并；自验是点/刷/听/看，不是命令墙） |
-| **4 下一步判断** | 能关就说可以关掉；不够就写完整下一步；对不齐指令先改方案 |
-| **5 清单** | 代理自己的核验勾选（质检 / 错题写回 / 记忆 / 长文等），不是让你勾「我听懂了」 |
+| **1 One-line result** | Done / the conclusion is / stuck where |
+| **2 Human explanation** | What happened, how it was handled, what was explicitly not done |
+| **3 Effect & self-verification** | What you'd feel + how you confirm yourself (merged; self-verification is click/refresh/listen/look, not a command wall) |
+| **4 Next-step call** | If closable, say so; if not enough, write the full next step; if misaligned with the instruction, fix the plan first |
+| **5 Checklist** | The agent's own verification ticks (QA / pitfall write-back / memory / long-form etc.), not "I understood" ticks for you |
 
-需要时才加块：打开哪里、全文在哪、就选这条、风险、拍板等。  
-方案票只有三句：**按这个做 / 改方案 / 先不动**。说做 = 整包，不拆成多选超市。
+Add blocks only when needed: where to open, where the full text is, pick this one, risk, sign-off, etc.
+A plan ticket has only three responses: **do this / change the plan / hold for now**. "Do it" = the whole package, not a multi-select supermarket.
 
-总规则地图只钉这五块；表形细则和加块清单在偏好文件里，避免地图胀成手册。
+The top-level map only pins these five blocks; table-shape details and the add-on list live in the preference file, so the map doesn't bloat into a manual.
 
-### 其余能力面
+### Other capability surfaces
 
-**外搜**
+**External search**
 
-| 档 | 干什么 |
+| Tier | What it does |
 |----|--------|
-| **浅搜** | 小问题，少轮次，正文要真读 |
-| **深搜** | 大调研，多轮多角度，要反证，结论落长文 |
-| **效果裁判** | 新文盖过旧文才替换；写完不能自称唯一真相 |
+| **Shallow** | Small questions, few rounds, body text actually read |
+| **Deep** | Big research, many rounds and angles, needs counter-evidence, conclusion lands as long-form |
+| **Effect judge** | A new doc only replaces the old when it covers more; you can't declare yourself the only truth after writing |
 
-新实现、新方案、卡住补招：默认先找现成（开源和社区权重高），没有合适再自写，并写清搜过什么、为何不用。
+New implementations, new approaches, stuck and need a trick: default to finding existing first (open source and community weighted high), only self-write if nothing fits, and write down what was searched and why it wasn't used.
 
-**安全**
+**Safety**
 
-危险 git、摧毁性删除、密钥面直读：系统级拦截。  
-凭据走加密管理，不把密钥整段喂进对话。  
-长对话被压缩后，关键铁律会再贴回来。  
-回合结束可以推到个人通知渠道；人不在屏幕前也能看到结果摘要。
+Dangerous git, destructive deletes, direct key reads: system-level interception.
+Credentials go through encrypted management, not fed whole into chat.
+After a long conversation is compressed, key rules are re-injected.
+At turn end, results can be pushed to a personal notification channel; away from the screen, you still see the summary.
 
-**远程与跨会话**
+**Remote & cross-session**
 
-远程消息和定时任务是拓展触角，不是第二个主脑。  
-没具体任务开场时，先报项目雷达，不空闲聊。  
-长项目有立项、交接、归档骨架，跨会话可断点续做。  
-本机浏览器多账号不混车道；桥断了先修再干活。
+Remote messages and scheduled tasks are extended feelers, not a second main brain.
+When there's no specific task at open, it reports the project radar instead of idly chatting.
+Long projects have kickoff, handoff, and archive scaffolding; cross-session checkpoint resume works.
+The local browser's multiple accounts stay in their lanes; if the bridge breaks, fix it before working.
 
-**设计、演示、媒体**
+**Design, demos, media**
 
-落地页、项目内 UI、设计规范、logo 分口走，不混着瞎调。  
-工程图默认一屏满图 + 一屏说明。  
-无拓扑时用信息卡。  
-选型板和调参试验要真进主题库才算入库。  
-视觉验收靠截图识图；一屏看板不许大片底空。  
-生图、本地超分、配音、成片、视频分析有固定入口。
+Landing pages, in-project UI, design specs, and logo each have a dedicated entry; no cluedo mixing.
+Engineering diagrams default to one full-screen diagram + one screen of explanation.
+No topology → info cards.
+Selection panels and tuning experiments only count as "in the library" once they actually enter the theme library.
+Visual acceptance relies on screenshot/vision; a one-screen dashboard can't have large empty floor.
+Image generation, local upscaling, voice-over, final cut, and video analysis have fixed entries.
 
-**自我进化**
+**Self-evolution**
 
-| 能力 | 含义 |
+| Capability | Meaning |
 |------|------|
-| 连错就进化 | 同类蠢再犯，改准则，不只道歉 |
-| 警告升级 | 你明确警告/生气时，走最高规格，不当场糊弄 |
-| 再犯失败传感器 | 规矩写了字不算完；必须留下再犯会失败的检查 |
-| 改 harness 对照 | 动总规则 / skill / hooks 前跑基线，改完看数字 |
-| 写规则有门 | 总规则有写作规范，禁止堆成散文垃圾场 |
-| 做 skill 有入口 | 新建或大改 skill 走元流程，禁止手搓交差 |
+| Recurring errors evolve | Same dumb mistake again → change the rule, not just apologize |
+| Warning escalation | When you clearly warn / get angry, run at top spec, no on-the-spot fobbing |
+| Recurrence-failing sensor | A rule with words isn't enough; it must leave a check that fails on recurrence |
+| Harness-change comparison | Run a baseline before touching top rules / skills / hooks; check the numbers after |
+| Rules have a writing door | Top rules have a writing spec; forbidden to pile into a prose junkyard |
+| Skills have an entry | Building or major-editing a skill goes through a meta-flow; no hand-waving delivery |
 
-## 这个仓
+## This repo
 
-**有**
+**Has**
 
-- 这份公开能力说明
-- 能力全景导图（`docs/harness-map.png`，16:9）
-- 主题 hero（`assets/readme/hero.svg`）
-- 以后可能补脱敏模板、可抄清单
+- This public capability write-up
+- A capability panorama map (`docs/harness-map.png`, 16:9)
+- A theme hero (`assets/readme/hero.svg`)
+- May later add desensitized templates, copyable checklists
 
-**没有，也不会放**
+**Doesn't have, and never will**
 
-- API Key、Cookie、Token、账号池
-- 内网地址、私人主机名、客户信息
-- 能直接连上我生产环境的配置
-- 「装完就和我一样强」的魔法脚本
+- API Keys, Cookies, Tokens, account pools
+- Intranet addresses, private hostnames, customer info
+- Config that directly connects to my production
+- A "install this and you're as strong as me" magic script
 
-纪律可以抄。你自己的坑和肌肉抄不走。
+The discipline is copyable. Your own pitfalls and muscle aren't.
 
-## 快速使用
+## Quick start
 
-不必克隆别人的人生。按官方扩展点往上加：
+Don't clone someone else's life. Add on top of the official extension points:
 
-| 步 | 做什么 |
+| Step | What to do |
 |----|--------|
-| 1 | 写短而硬的全局 `CLAUDE.md`：铁律 + 路由表；厚流程别塞满 |
-| 2 | 重复流程拆 skill（交付、外搜、进化各一个就够起步） |
-| 3 | 加一两个只读分身：质检、外搜 |
-| 4 | 用 hook 焊死你最怕的误操作 |
-| 5 | 知识至少拆开：短经验 vs 长文 |
-| 6 | 完成必须有可检查证据；自报完成无效 |
-| 7 | 同类错误第二次必须改规矩，并留下再犯会失败的检查 |
-| 8 | 定死对人汇报骨架（结果 → 说明 → 自验 → 能否关 → 自检清单） |
-| 9 | 写清何时分头、何时互聊、何时批量；多路并行要有汇总产物 |
+| 1 | Write a short, hard global `CLAUDE.md`: iron rules + routing table; don't stuff heavy flow in |
+| 2 | Split repeating flows into skills (one each for delivery, search, evolution is enough to start) |
+| 3 | Add one or two read-only subagents: QA, search |
+| 4 | Weld shut your most-feared mistakes with hooks |
+| 5 | At least split knowledge: short lessons vs long-form |
+| 6 | Completion must have checkable evidence; self-reported completion is void |
+| 7 | The second time the same error happens, must change a rule and leave a check that fails on recurrence |
+| 8 | Fix the reporting spine to humans (result → explanation → self-verify → can-close → self-check list) |
+| 9 | Write down when to split, when to debate, when to batch; multi-path parallelism must have a merged artifact |
 
-官方文档：
+Official docs:
 
 - [Extend Claude Code](https://code.claude.com/docs/en/features-overview)
 - [Memory / CLAUDE.md](https://code.claude.com/docs/en/memory)
@@ -245,37 +253,37 @@
 - [Hooks](https://code.claude.com/docs/en/hooks-guide)
 - [MCP](https://code.claude.com/docs/en/mcp)
 
-**给谁看**
+**Who it's for**
 
-长期用 Claude Code、想公开自己工作流、对 agent 编排感兴趣的人，能拿走分层思路。  
-只看热闹的人，看完架构、原则、速查三节就够。
+People who use Claude Code long-term, want to publish their own workflow, and are interested in agent orchestration — you can take the layering thinking.
+For the just-browsing crowd, the Architecture, Principles, and Quick-reference sections are enough.
 
-不适合：要找一键安装包的、想要我密钥和账号池的、把这当 Anthropic 官方文档的。这里没有那些东西。
+Not for: those wanting a one-click installer, those wanting my keys and account pools, or anyone treating this as Anthropic's official docs. None of that is here.
 
-## 目录
+## Table of contents
 
-- [一句话价值](#一句话价值)
-- [能力全景](#能力全景)
-- [为什么不一样](#为什么不一样)
-- [核心方法论](#核心方法论)
-  - [架构](#架构)
-  - [交付产线：五步](#交付产线五步)
-  - [接线：五个常驻分身](#接线五个常驻分身)
-  - [编排（Graph 思路，不换壳）](#编排graph-思路不换壳)
-  - [记忆：四库](#记忆四库)
-  - [汇报骨架（对人说话）](#汇报骨架对人说话)
-  - [其余能力面](#其余能力面)
-- [这个仓](#这个仓)
-- [快速使用](#快速使用)
-- [许可与致谢](#许可与致谢)
+- [One-line value](#one-line-value)
+- [Capability panorama](#capability-panorama)
+- [Why it's different](#why-its-different)
+- [Core methodology](#core-methodology)
+  - [Architecture](#architecture)
+  - [Delivery pipeline: five steps](#delivery-pipeline-five-steps)
+  - [Wiring: five standing subagents](#wiring-five-standing-subagents)
+  - [Orchestration (Graph thinking, no shell swap)](#orchestration-graph-thinking-no-shell-swap)
+  - [Memory: four libraries](#memory-four-libraries)
+  - [Reporting spine (speaking to humans)](#reporting-spine-speaking-to-humans)
+  - [Other capability surfaces](#other-capability-surfaces)
+- [This repo](#this-repo)
+- [Quick start](#quick-start)
+- [License & acknowledgements](#license--acknowledgements)
 
-## 许可与致谢
+## License & acknowledgements
 
-公开说明仓，以 README 与导图为主。思想可复现，私人库不公开。  
-本页已对齐近期两处能力面：编排纪律（分头 / 汇总 / 流水 / 断点）与汇报脊骨五表。导图仍是总览示意，细节以本文为准。能力面稳定后会偶尔改这篇，不保证日更。
+A public-notes repo, mainly this README and the map. Ideas are reproducible; private libraries aren't published.
+This page aligns to two recent capability surfaces: orchestration discipline (split / merge / pipeline / checkpoint) and the reporting spine of five blocks. The map remains an overview sketch; this text is authoritative. I'll occasionally edit this when surfaces stabilize; no daily-update guarantee.
 
-文字可引用、可改编思路；注明来源更好。  
-这不是 Anthropic 的承诺。  
-别把私人配置贴进公开仓。
+Text is quotable, ideas adaptable; citing the source is nicer.
+This is not an Anthropic promise.
+Don't paste private config into a public repo.
 
 Built on [Claude Code](https://code.claude.com). Personal harness, public notes.
