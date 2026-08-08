@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="Consolas,'Cascadia Mono','Courier New',monospace">
+  <defs>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#3c3836" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#32302f" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arr-main" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ebdbb2"/>
+    </marker>
+    <marker id="arr-sub" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#665c54"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#282828"/>
+  <circle cx="800" cy="450" r="430" fill="url(#halo)"/>
+
+  <!-- arrows: bold main axis (up/down), thin diagonals -->
+  <line x1="800" y1="375" x2="800" y2="170" stroke="#ebdbb2" stroke-width="3" marker-end="url(#arr-main)"/>
+  <line x1="800" y1="525" x2="800" y2="730" stroke="#ebdbb2" stroke-width="3" marker-end="url(#arr-main)"/>
+  <line x1="653" y1="375" x2="448" y2="270" stroke="#665c54" stroke-width="2" marker-end="url(#arr-sub)"/>
+  <line x1="947" y1="375" x2="1152" y2="270" stroke="#665c54" stroke-width="2" marker-end="url(#arr-sub)"/>
+  <line x1="1050" y1="458" x2="1250" y2="465" stroke="#665c54" stroke-width="2" marker-end="url(#arr-sub)"/>
+  <line x1="920" y1="525" x2="1166" y2="680" stroke="#665c54" stroke-width="2" marker-end="url(#arr-sub)"/>
+  <line x1="681" y1="525" x2="434" y2="680" stroke="#665c54" stroke-width="2" marker-end="url(#arr-sub)"/>
+
+  <!-- center node -->
+  <rect x="550" y="375" width="500" height="150" rx="18" fill="#1d2021" stroke="#ebdbb2" stroke-width="3"/>
+  <text x="800" y="433" text-anchor="middle" font-size="40" font-weight="bold" fill="#fbf1c7">sai-harness</text>
+  <text x="800" y="473" text-anchor="middle" font-size="17" fill="#a89984">personal delivery system · no client modding</text>
+
+  <!-- top: three-layer memory (green) -->
+  <rect x="630" y="40" width="340" height="130" rx="14" fill="#1d2021" stroke="#b8bb26" stroke-width="3"/>
+  <text x="800" y="85" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Three-layer memory</text>
+  <text x="800" y="118" text-anchor="middle" font-size="15" fill="#ebdbb2">mnemonic · MaxKB pitfalls</text>
+  <text x="800" y="144" text-anchor="middle" font-size="15" fill="#ebdbb2">wiki knowledge</text>
+
+  <!-- top-left: interfaces (pink) -->
+  <rect x="150" y="140" width="340" height="130" rx="14" fill="#1d2021" stroke="#d3869b" stroke-width="3"/>
+  <text x="320" y="185" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Interfaces</text>
+  <text x="320" y="218" text-anchor="middle" font-size="15" fill="#ebdbb2">design · theme · diagrams</text>
+  <text x="320" y="244" text-anchor="middle" font-size="15" fill="#ebdbb2">image · voiceover</text>
+
+  <!-- top-right: delivery pipeline (bright green) -->
+  <rect x="1110" y="140" width="340" height="130" rx="14" fill="#1d2021" stroke="#9ece6a" stroke-width="3"/>
+  <text x="1280" y="185" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Delivery pipeline</text>
+  <text x="1280" y="218" text-anchor="middle" font-size="15" fill="#ebdbb2">judge → spec → execute</text>
+  <text x="1280" y="244" text-anchor="middle" font-size="15" fill="#ebdbb2">verify → write-back</text>
+
+  <!-- right: judging & routing (yellow) -->
+  <rect x="1240" y="405" width="340" height="130" rx="14" fill="#1d2021" stroke="#d79921" stroke-width="3"/>
+  <text x="1410" y="450" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Judging &amp; routing</text>
+  <text x="1410" y="483" text-anchor="middle" font-size="15" fill="#ebdbb2">light: single pass</text>
+  <text x="1410" y="509" text-anchor="middle" font-size="15" fill="#ebdbb2">heavy: multi-agent flow</text>
+
+  <!-- bottom-right: safety (orange) -->
+  <rect x="1100" y="680" width="340" height="130" rx="14" fill="#1d2021" stroke="#d65d0e" stroke-width="3"/>
+  <text x="1270" y="725" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Safety</text>
+  <text x="1270" y="758" text-anchor="middle" font-size="15" fill="#ebdbb2">delete-guard · path-guard</text>
+  <text x="1270" y="784" text-anchor="middle" font-size="15" fill="#ebdbb2">secrets pipeline · archive-first</text>
+
+  <!-- bottom-left: six agent types (blue) -->
+  <rect x="160" y="680" width="340" height="130" rx="14" fill="#1d2021" stroke="#83a598" stroke-width="3"/>
+  <text x="330" y="725" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Six agent types</text>
+  <text x="330" y="758" text-anchor="middle" font-size="15" fill="#ebdbb2">task · scout · reviewer</text>
+  <text x="330" y="784" text-anchor="middle" font-size="15" fill="#ebdbb2">designer · sonic · librarian</text>
+
+  <!-- bottom: self-evolution (red) -->
+  <rect x="630" y="730" width="340" height="130" rx="14" fill="#1d2021" stroke="#fb4934" stroke-width="3"/>
+  <text x="800" y="775" text-anchor="middle" font-size="21" font-weight="bold" fill="#fbf1c7">Self-evolution</text>
+  <text x="800" y="808" text-anchor="middle" font-size="15" fill="#ebdbb2">watcher advisor · evals baseline/Δ</text>
+  <text x="800" y="834" text-anchor="middle" font-size="15" fill="#ebdbb2">pitfall write-back</text>
+</svg>
