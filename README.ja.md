@@ -140,13 +140,27 @@ You
 
 ## このリポジトリ
 
-**あるもの** — 本解説、能力マップ、ヒーロー画像、後日:サニタイズ済みテンプレートとコピー可能なチェックリスト。
+**あるもの** — 本解説、能力マップ、ヒーロー画像、サニタイズ済みでそのままコピーできるテンプレートとチェックリスト（`templates/`、`checklists/`）：短い地図 `AGENTS.md` スケルトン、2つの契約（light / heavy）、scout と reviewer の2つのエージェント定義、evals 基線スクリプト、完了定義チェックリスト、報告スパインチェックリスト。
 
 **ないもの、そして今後もないもの**
 - API キー、Cookie、トークン、アカウントプール
 - 内網アドレス、プライベートホスト名、顧客データ
 - 私の本番環境に接続する設定
 - 「これをインストールすれば私と同じ強さになれる」スクリプト — 方法はコピー可能ですが、あなたの失敗と筋肉はコピーできません
+
+## テンプレートとチェックリスト
+
+サニタイズ済みのスケルトン。新しいエージェントリポジトリにドロップして改编するだけ。これらが運ぶのは*手法*であり、私のプライベート設定ではない — パス、キー、ホスト名、内部スキル名は一切残っていない。
+
+| ファイル | 何が得られるか |
+|------|----------------|
+| [`templates/AGENTS.md`](templates/AGENTS.md) | 短い地図テンプレート:鉄のルール + ルーティング、手順は名前参照のみでコピーしない、毎ターン5つの規律、レッドライン、報告スパイン、自己メンテナンス |
+| [`templates/light-contract.md`](templates/light-contract.md) | light タスクエンジン:3行 spec、`task` ディスパッチ、機械的自己検証（light たる理由）、done 5件、heavy へ昇格するタイミング |
+| [`templates/heavy-contract.md`](templates/heavy-contract.md) | heavy マルチエージェント契約:完全 spec テンプレート、役割別ディスパッチ（scout/task/reviewer）、ウォッチドッグレール、独立 reviewer 入り done 5件、中止ルール |
+| [`templates/agents-scout-reviewer.md`](templates/agents-scout-reviewer.md) | 2つの要となる役割のコピー可能なエージェント定義:`scout`（読み取り専用の高速偵察）と `reviewer`（空コンテキスト、クロスファミリー、ディスク証拠の評決） |
+| [`templates/evals-baseline.ps1`](templates/evals-baseline.ps1) | PowerShell evals ハーネステンプレート:ファイルに対する純粋なアサーション、ルール変更前に基線スナップショット、変更後に diff — `fail>0` または pass 数低下で回帰。コアファイルサイズガード付き |
+| [`checklists/completion-dod.md`](checklists/completion-dod.md) | 「本当に終わったか」のチェックリスト:5つの必須次元、タスクタイプ別テーブル、DoD レッドライン、「分からない」と「同じエラー3回」の硬ルール |
+| [`checklists/reporting-spine.md`](checklists/reporting-spine.md) | 報告スパインチェックリスト:5つの固定ブロック順序、チェックリストは常に最後、受領文字列はツール応答からコピーのみ、語彙ゲートとオプションゲート |
 
 ## クイックスタート
 

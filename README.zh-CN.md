@@ -140,13 +140,27 @@ You
 
 ## 本仓库
 
-**有** — 这份说明书、能力导图、hero 图，以后：脱敏模板和可抄的清单。
+**有** — 这份说明书、能力导图、hero 图，以及脱敏后可直接抄的模板和清单（`templates/`、`checklists/`）：一份短地图 `AGENTS.md` 骨架、两份合同（轻 / 重）、scout 与 reviewer 两个分身定义、一份评测基线脚本，外加一份完成定义清单和一份汇报骨架清单。
 
 **没有，也永远不会放**
 - API Key、Cookies、Token、账号池
 - 内网地址、私有主机名、客户数据
 - 连到我的生产环境的配置
 - 一个「装了这个你就和我一样强」的脚本——方法可抄；你的坑和你的肌肉抄不走
+
+## 模板与清单
+
+脱敏骨架，可以直接丢进一个新的 agent 仓改着用。它们承载的是*方法*，不是我的私有配置——抄过来时路径、密钥、主机名、内部技能名都不剩。
+
+| 文件 | 给你什么 |
+|------|----------|
+| [`templates/AGENTS.md`](templates/AGENTS.md) | 短地图模板：铁律 + 路由，流程只按名引用不抄回，每轮五步纪律、红线、汇报骨架、自维护 |
+| [`templates/light-contract.md`](templates/light-contract.md) | 轻任务引擎：三行 spec、`task` 派工、机械自证（轻之所以为轻的核心）、done 五件、何时升重 |
+| [`templates/heavy-contract.md`](templates/heavy-contract.md) | 重任务多分身合同：全量 spec 模板、按角色派工（scout/task/reviewer）、看门狗护栏、带入独立 reviewer 的 done 五件、中止规则 |
+| [`templates/agents-scout-reviewer.md`](templates/agents-scout-reviewer.md) | 两个承重角色的可直接抄分身定义：`scout`（只读快速侦察）和 `reviewer`（空上下文、跨模型族、证据在盘的裁决） |
+| [`templates/evals-baseline.ps1`](templates/evals-baseline.ps1) | 一份 PowerShell 评测脚本模板：对盘上文件做纯断言，改规则前先存基线快照、改完 diff——`fail>0` 或 pass 数下降即回归；内含核心文件体量护栏 |
+| [`checklists/completion-dod.md`](checklists/completion-dod.md) | 「到底做完没」的清单：五件缺一不算完、按任务类型的「顺手补齐」表、DoD 红线、「听不懂」和「同错三犯」两条硬规则 |
+| [`checklists/reporting-spine.md`](checklists/reporting-spine.md) | 汇报骨架清单：五块固定顺序、清单永远最后、回执串只能从工具回执复制不可手打、词汇门和选项门 |
 
 ## 快速开始
 
