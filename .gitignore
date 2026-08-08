@@ -5,6 +5,6 @@ Thumbs.db
 secrets/
 .secrets/
 node_modules/
-.claude/
+.agents/
 *.prev.*
 *.prev

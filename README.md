@@ -140,13 +140,28 @@ External search, browser, remote operations, scheduled jobs: all are extended fe
 
 ## This repo
 
-**Has** — this write-up, the capability map, the hero, later: sanitized templates and copyable checklists.
+**Has** — this write-up, the capability map, the hero, and sanitized copy-paste templates & checklists (`templates/`, `checklists/`): a short-map `AGENTS.md` skeleton, the two contracts (light/heavy), scout & reviewer agent definitions, an evals-baseline harness script, plus a Done-definition checklist and a reporting-spine checklist.
 
 **Doesn't have, and never will**
 - API Keys, Cookies, Tokens, account pools
 - Intranet addresses, private hostnames, customer data
 - Config that connects to my production
 - A "install this and you're as strong as me" script — the method is copyable; your pitfalls and muscle aren't
+
+## Templates & checklists
+
+Sanitized skeletons you can drop into a fresh agent repo and adapt. They carry the *method*, not my private config — no paths, keys, hostnames, or skill names survived the copy.
+
+| File | What it gives you |
+|------|--------------------|
+| [`templates/AGENTS.md`](templates/AGENTS.md) | The short-map template: iron rules + routing, procedures referenced by name and never copied back, the five-turn discipline, red lines, delivery spine, self-maintenance |
+| [`templates/light-contract.md`](templates/light-contract.md) | The light-task engine: three-line spec, `task` dispatch, mechanical self-verify (the whole point of "light"), done-five, when to escalate to heavy |
+| [`templates/heavy-contract.md`](templates/heavy-contract.md) | The heavy multi-agent contract: full spec template, role-routed dispatch (scout/task/reviewer), watchdog rails, done-five-with-independent-reviewer, abort rules |
+| [`templates/agents-scout-reviewer.md`](templates/agents-scout-reviewer.md) | Copy-paste agent definitions for the two load-bearing roles: `scout` (read-only fastball recon) and `reviewer` (blank-context, cross-family, evidence-on-disk verdict) |
+| [`templates/evals-baseline.ps1`](templates/evals-baseline.ps1) | A PowerShell evals harness template: pure assertions over files, snapshot a baseline before a rule change, diff after — `fail>0` or pass count dropping = regression; includes the core-file size guard |
+| [`checklists/completion-dod.md`](checklists/completion-dod.md) | The "is this actually done?" checklist: the five required dimensions together, per-task-type table, DoD red lines, the "I don't understand" and "same error ×3" rules |
+| [`checklists/reporting-spine.md`](checklists/reporting-spine.md) | The delivery-spine checklist: the five fixed blocks in order, the checklist-always-last rules, receipt-strings-copied-from-tool-replies, the vocabulary gate and the options gate |
+
 
 ## Quick start
 
@@ -187,7 +202,7 @@ Official material:
   - [Memory: three layers](#memory-three-layers)
   - [Resilience & safety](#resilience--safety)
   - [Looking outward](#looking-outward)
-- [This repo](#this-repo)
+- [Templates & checklists](#templates--checklists)
 - [Quick start](#quick-start)
 - [License & acknowledgements](#license--acknowledgements)
 
